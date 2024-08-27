@@ -1,22 +1,25 @@
+// src/index.js
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
+import ReactDOM from 'react-dom/client'; // Import from 'react-dom/client'
+import { configureStore } from '@reduxjs/toolkit';
+import { Provider } from 'react-redux';
+import rootReducer from './Store/userSlice';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
-import{createStore} from 'redux';
-import { legacy_createStore as createStore } from 'redux';
-import {provider} from 'react-redux';
 
-const store=createStore();
+// Create the Redux store
+const store = configureStore({
+  reducer: rootReducer,
+});
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// Get the root element from the DOM
+const container = document.getElementById('root');
+
+// Create the root for React 18 using createRoot
+const root = ReactDOM.createRoot(container);
+
+// Render the application
 root.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>
+  </Provider>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
