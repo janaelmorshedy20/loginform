@@ -1,4 +1,4 @@
-// src/Store/userSlice.js
+
 import { createSlice } from '@reduxjs/toolkit';
 
 const userSlice = createSlice({
@@ -18,6 +18,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUser, clearUser, login } = userSlice.actions; // Export login
-export const selectUser = (state) => state.user; // Define and export selectUser
+export const { setUser, clearUser, login } = userSlice.actions; 
+export const selectUser = (state) => state.user; 
 export default userSlice.reducer;

@@ -8,7 +8,8 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
-    const [serverError, setServerError] = useState(""); // To capture server errors
+    const [serverError, setServerError] = useState(""); 
+    const [token, setToken] = useState(""); 
 
     const dispatch = useDispatch();
 
@@ -47,7 +48,7 @@ const Login = () => {
                     },
                 });
 
-                const { token } = response.data;
+                const { token } = response.data; // Correctly capturing the token
 
                 // Store the token in localStorage or cookies
                 localStorage.setItem('authToken', token);
@@ -59,24 +60,10 @@ const Login = () => {
                     loggedIn: true,
                 }));
 
-                // Correct the URL to the actual protected route
-                const authToken = localStorage.getItem('authToken');
+                // Update the state with the token
+                setToken(token);
 
-                axios.get('https://backend.profferdeals.com/api/admin/login' , {
-                    headers: {
-                        'Authorization': `Bearer ${authToken}`,
-                    },
-                })
-                .then(response => {
-                    // Handle successful response
-                    console.log('Protected data:', response.data);
-                })
-                .catch(error => {
-                    // Handle error
-                    console.error('Error fetching protected data:', error);
-                    setServerError("Error fetching protected data.");
-                });
-
+                // Redirect or fetch additional data after successful login
             } catch (error) {
                 setServerError("Login failed. Please check your credentials and try again.");
             }
@@ -85,6 +72,7 @@ const Login = () => {
 
     return (
         <div className='login'>
+            <img src="\1a5d8c05200b6f1d9a56d8133b09923f.jpg" alt="Background" className="background-image" />
             <form className="login_form" onSubmit={(e) => handleSubmit(e)}>
                 <h1>Login Here</h1>
 

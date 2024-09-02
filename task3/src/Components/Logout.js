@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearUser as logout } from "../Store/userSlice";  // Renaming the import to avoid conflict
+import { clearUser as logout } from "../Store/userSlice";  
 import { selectUser } from "../Store/userSlice";
 import"./Login.css"
 
@@ -11,7 +11,7 @@ const Logout = () => {
 
     const handleLogout = (e) => {
         e.preventDefault();
-        dispatch(logout()); // Now using the renamed 'logout'
+        dispatch(logout()); 
     };
 
     return (
