@@ -16,10 +16,12 @@ const Logout = () => {
 
     return (
         <div>
-            <h1>
-                Welcome <span className="user_name"> {user.email}</span>
-            </h1>
-            <button type="submit" onClick={handleLogout}>Logout</button>
+             <img src="\1a5d8c05200b6f1d9a56d8133b09923f.jpg" alt="Background" className="background-image" />
+            <h2>
+                 <span className="user_name"> welcome {user.email}</span>
+            </h2>
+            
+            <button type="submitlogout" onClick={handleLogout}>Logout</button>
           
         </div>
     );
