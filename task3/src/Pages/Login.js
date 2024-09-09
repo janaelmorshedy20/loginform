@@ -1,20 +1,16 @@
 import React, { useState } from 'react';
-import "./Login.css";
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { login } from '../Store/userSlice';
 import { useNavigate } from "react-router-dom";
-
+import "./Login.css";
 
 const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
     const [serverError, setServerError] = useState(""); 
-    const [token, setToken] = useState(""); 
     const [alert, setAlert] = useState("none");
     const navigate = useNavigate();
-
     const dispatch = useDispatch();
 
     const validateForm = () => {
@@ -31,7 +27,7 @@ const Login = () => {
         return newErrors;
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
 
         const formErrors = validateForm();
@@ -42,40 +38,24 @@ const Login = () => {
             setErrors({});
             setServerError(""); // Clear any previous server errors
 
-            // try {
-            //     const response = await axios.post('https://backend.profferdeals.com/api/admin/login', {
-            //         email: email,
-            //         password: password,
-            //     }, {
-            //         headers: {
-            //             'Accept': 'application/json',
-            //         },
-            //     });
+            // Hardcoded credentials for demo purposes
+            const validEmail = "admin@proffer.com";
+            const validPassword = "123456";
 
-                // const { token } = response.data; // Correctly capturing the token
+            if (email === validEmail && password === validPassword) {
+                // Store the token in localStorage (simulated)
+                localStorage.setItem("authToken", "your-token");
+                navigate("/dashboard");
 
-                // Store the token in localStorage or cookies
-                if(email==="admin@proffer.com" && password==="123456"){
-                    localStorage.setItem("authToken", "your-token");
-                    navigate("/dashboard");
-                  } else {
-                    setAlert("flex");
-                  }
-
-                // Dispatch the login action with the token
+                // Dispatch the login action with a token
                 dispatch(login({
                     email: email,
-                    token: token,
+                    token: "your-token",
                     loggedIn: true,
                 }));
-
-                // Update the state with the token
-                // setToken(token);
-
-                // Redirect or fetch additional data after successful login
-            // } catch (error) {
-            //     setServerError("Login failed. Please check your credentials and try again.");
-            // }
+            } else {
+                setServerError("Invalid email or password. Please try again.");
+            }
         }
     };
 
