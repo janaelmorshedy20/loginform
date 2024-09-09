@@ -3,6 +3,8 @@ import "./Login.css";
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { login } from '../Store/userSlice';
+import { useNavigate } from "react-router-dom";
+
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -10,6 +12,8 @@ const Login = () => {
     const [errors, setErrors] = useState({});
     const [serverError, setServerError] = useState(""); 
     const [token, setToken] = useState(""); 
+    const [alert, setAlert] = useState("none");
+    const navigate = useNavigate();
 
     const dispatch = useDispatch();
 
@@ -38,20 +42,25 @@ const Login = () => {
             setErrors({});
             setServerError(""); // Clear any previous server errors
 
-            try {
-                const response = await axios.post('https://backend.profferdeals.com/api/admin/login', {
-                    email: email,
-                    password: password,
-                }, {
-                    headers: {
-                        'Accept': 'application/json',
-                    },
-                });
+            // try {
+            //     const response = await axios.post('https://backend.profferdeals.com/api/admin/login', {
+            //         email: email,
+            //         password: password,
+            //     }, {
+            //         headers: {
+            //             'Accept': 'application/json',
+            //         },
+            //     });
 
-                const { token } = response.data; // Correctly capturing the token
+                // const { token } = response.data; // Correctly capturing the token
 
                 // Store the token in localStorage or cookies
-                localStorage.setItem('authToken', token);
+                if(email==="admin@proffer.com" && password==="123456"){
+                    localStorage.setItem("authToken", "your-token");
+                    navigate("/dashboard");
+                  } else {
+                    setAlert("flex");
+                  }
 
                 // Dispatch the login action with the token
                 dispatch(login({
@@ -61,12 +70,12 @@ const Login = () => {
                 }));
 
                 // Update the state with the token
-                setToken(token);
+                // setToken(token);
 
                 // Redirect or fetch additional data after successful login
-            } catch (error) {
-                setServerError("Login failed. Please check your credentials and try again.");
-            }
+            // } catch (error) {
+            //     setServerError("Login failed. Please check your credentials and try again.");
+            // }
         }
     };
 
